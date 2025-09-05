@@ -4,11 +4,11 @@ import MobileMenu from "./MobileMenu";
 const Header = ()=>{
 
     return(
-        <header className="bg-blue-200 shadow-md sticky top-0">
+        <header className="bg-background shadow-md sticky top-0">
             <div className="flex items-center justify-between max-full max-w-[1200px] py-4  mx-auto  md:px-4">
-            <NavLink to="/"> <div id="logo" className="text-3xl text-red-700 text-shadow-gray-900 cursor-pointer font-bold">Note-book</div></NavLink>
+            <NavLink to="/"> <div id="logo" className="text-3xl text-primary text-shadow-gray-900 cursor-pointer font-bold">Note-book</div></NavLink>
             <nav className="md:block hidden">
-                <ul className="flex text-xl cursor-pointer space-x-4">
+                <ul className="flex text-xl text-text cursor-pointer space-x-4">
                     <li className="  hover:underline">
                        <NavLink to="/" className={({isActive})=>{return isActive?'underline':''}}>Home</NavLink>
                     </li>

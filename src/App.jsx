@@ -3,7 +3,7 @@ import './App.css'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from './components/Layout';
-
+import Login from './components/Login';
 function App() {
   const routes = createBrowserRouter([
     {
@@ -13,7 +13,7 @@ function App() {
         { index: true, element: <div>Home</div> },
         { path: '/about', element: <div>About</div> },
         { path: '/contact', element: <div>Contact</div> },
-        { path: '/login', element: <div>Login</div> },
+        { path: '/login', element: <Login/> },
       ],
     },{
        path: '/admin',
