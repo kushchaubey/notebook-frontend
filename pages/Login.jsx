@@ -1,6 +1,6 @@
 import { useState } from "react";
-import InputFormGroup from "./formsComponent/InputFormGroup";
-import FormButton from "./formsComponent/formButton";
+import InputFormGroup from "../src/components/formsComponent/InputFormGroup";
+import FormButton from "../src/components/formsComponent/formButton";
 
 const Login = ()=>{
     const [userName, setUserName] = useState("");
@@ -24,6 +24,7 @@ const Login = ()=>{
                      <FormButton buttonname="Login"/>
                    </form>
 
+             
          </div>
         </>
      

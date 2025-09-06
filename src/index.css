@@ -1,6 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --color-primary: #3B82F6;
@@ -11,20 +12,21 @@
 
 .dark {
   --color-background: #111827; /* Dark bg */
-  --color-text: #F9FAFB;       /* Light text */
-  
+  --color-text: #F9FAFB;       /* Light text */       
+  --background: oklch(0.145 0 0);       
+  --foreground: oklch(0.985 0 0);       
+
 }
 
 body.dark {
-   
+
     background-color: #111827;
-    
-  
+
 }
 
 @layer base{
     button{
-        
+
         @apply rounded-2xl bg-primary cursor-pointer text-white max-w-[200px] p-2 w-full hover:bg-blue-400;
     }
 }
@@ -36,3 +38,7 @@ body.dark {
         @apply w-full bg-background rounded-2xl mx-auto mt-6 p-4 shadow;
     }
 }
+
+
+  
+
