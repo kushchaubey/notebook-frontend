@@ -67,12 +67,14 @@ const Home = ()=>{
   }
 
 
-  const {register,   formState: { errors }, handleSubmit}=  useForm();
+  const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
 
   function editFunction(row){
     console.log(row);
     setIsEditForm(true);
     setIsModelOpen(true);
+    reset({ title: "", note: "" });
+
   }
   function onSubmit(data){
       console.log(errors)
@@ -85,7 +87,13 @@ const Home = ()=>{
                   <h1 className="heading">Notes</h1>
 
             <div className='flex justify-between mb-4 mt-4'>
-                <AddNote label="Add Note" className="cursor-pointer" onClick={()=>{setIsEditForm(false); setIsModelOpen(true)}}/>
+                <AddNote label="Add Note" className="cursor-pointer" onClick={()=>{
+                    setIsEditForm(false); 
+                    setIsModelOpen(true);
+                    reset({ title: "", note: "" });
+
+                    
+                    }}/>
                <SearchField placeholder="Search notes" onChange={(e)=>{filterData(e)}} value={searchTerm} />
             </div>    
                 
