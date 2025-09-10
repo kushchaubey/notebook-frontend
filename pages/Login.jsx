@@ -1,26 +1,27 @@
 import { useState } from "react";
 import InputFormGroup from "../src/components/formsComponent/InputFormGroup";
 import FormButton from "../src/components/formsComponent/formButton";
-
+import { useForm } from "react-hook-form";
+import axios from "axios";
 const Login = ()=>{
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+  const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
 
-    function handlerUserName(e){
-        setUserName(e.target.value);
-    }
 
-     function handlerPassword(e){
-        setPassword(e.target.value);
+    function onsubmit(data){
+      console.log(data); 
     }
     return(
         <>
          <div className="box-container max-w-[600px]" >
                   <h1 className="heading">Login</h1>
  
-                   <form action="">
-                     <InputFormGroup label="UserName" id="userName" name="userName" type="text" value={userName} onChange={handlerUserName}/>
-                     <InputFormGroup label="password" id="password" name="password" type="password" value={password} onChange={handlerPassword}/>
+                   <form onSubmit={handleSubmit(onsubmit)}>
+                     <InputFormGroup label="UserName" id="userName" {...register("userName",{required:"Username is required"})} type="text"  >
+                       {errors.userName && (<p className="text-red-400">{errors.userName?.message}</p>)}
+                     </InputFormGroup>
+                     <InputFormGroup label="password" id="password"  {...register("password",{required:"Password is required"})} type="password"  >
+                      {errors.password && (<p className="text-red-400">{errors.password?.message}</p>)}
+                     </InputFormGroup>
                      <FormButton buttonname="Login"/>
                    </form>
 
