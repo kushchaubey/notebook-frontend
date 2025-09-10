@@ -27,7 +27,7 @@ body.dark {
 @layer base{
     button{
 
-        @apply rounded-2xl bg-primary cursor-pointer text-white max-w-[200px] p-2 w-full hover:bg-blue-400;
+        @apply rounded-2xl bg-primary cursor-pointer text-white max-w-[200px] p-2  hover:bg-blue-400;
     }
 }
 @layer components{

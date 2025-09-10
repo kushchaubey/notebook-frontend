@@ -1,14 +1,22 @@
-import { useState } from "react";
 import InputFormGroup from "../src/components/formsComponent/InputFormGroup";
 import FormButton from "../src/components/formsComponent/formButton";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../src/context/AuthContext";
+import { useNavigate } from "react-router";
 const Login = ()=>{
-  const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
+  const {register, formState: { errors }, handleSubmit,reset}=  useForm();
+  const useAuth = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {user, authToken, login} = useAuth;
+    async function onsubmit(data){
+        const success = await login(data.userName, data.password);
+        console.log(success);
+         if(success){
+          navigate("/");
+         console.log("login")
+         }
 
-
-    function onsubmit(data){
-      console.log(data); 
     }
     return(
         <>
