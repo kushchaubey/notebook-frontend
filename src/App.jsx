@@ -6,7 +6,7 @@ import Layout from './components/Layout';
 import Login from '../src/pages/Login';
 import Home from '../src/pages/Home';
 import Details from '../src/pages/Details';
-
+import RouteProtector from './utils/routeProtector';
 function App() {
  
 
@@ -17,11 +17,11 @@ function App() {
       path: '/',
       element: <Layout />,
       children: [
-        { index: true, element:(<Home/> )},
+        { index: true, element:(<RouteProtector><Home/></RouteProtector> )},
         { path: '/about', element: <div>About</div> },
         { path: '/contact', element: <div>Contact</div> },
-        { path: '/details/:id', element: <Details/> },
-        { path: '/login', element: <Login/> },
+        { path: '/details/:id', element:<RouteProtector><Details/></RouteProtector>  },
+        { path: '/login', element: <RouteProtector isloginPage={true}><Login/></RouteProtector> },
       ],
     },{
        path: '/admin',
