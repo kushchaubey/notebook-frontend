@@ -1,11 +1,11 @@
 import { FaEdit, FaTrash } from 'react-icons/fa'; // for icons
-import NoteTable from '../src/components/NoteTable';
-import AddNote from '../src/components/AddNote';
-import SearchField from '../src/components/SearchField';
+import NoteTable from '../components/NoteTable';
+import AddNote from '../components/AddNote';
+import SearchField from '../components/SearchField';
 import { useState } from 'react';
-import Model from '../src/components/Model';
-import InputFormGroup from "../src/components/formsComponent/InputFormGroup";
-import FormButton from "../src/components/formsComponent/formButton";
+import Model from '../components/Model';
+import InputFormGroup from "../components/formsComponent/InputFormGroup";
+import FormButton from "../components/formsComponent/formButton";
 import { useForm } from 'react-hook-form';
 
 

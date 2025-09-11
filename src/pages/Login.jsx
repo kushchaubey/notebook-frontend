@@ -1,8 +1,8 @@
-import InputFormGroup from "../src/components/formsComponent/InputFormGroup";
-import FormButton from "../src/components/formsComponent/formButton";
+import InputFormGroup from "../components/formsComponent/InputFormGroup";
+import FormButton from "../components/formsComponent/formButton";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
-import { AuthContext } from "../src/context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 const Login = ()=>{
   const {register, formState: { errors }, handleSubmit,reset}=  useForm();
