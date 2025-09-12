@@ -9,7 +9,7 @@ const userAuth = useContext(AuthContext);
 
 const {user} = userAuth
     return(
-        <header className="bg-background shadow-md sticky top-0">
+        <header className="bg-background shadow-md sticky top-0 z-10">
             <div className="flex items-center justify-between max-full max-w-[1200px] py-4  mx-auto  md:px-4">
             <NavLink to="/"> <div id="logo" className="text-3xl text-primary text-shadow-gray-900 cursor-pointer font-bold">Note-book</div></NavLink>
             <nav className="md:block hidden">
