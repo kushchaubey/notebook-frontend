@@ -7,6 +7,7 @@ import Login from '../src/pages/Login';
 import Home from '../src/pages/Home';
 import Details from '../src/pages/Details';
 import RouteProtector from './utils/routeProtector';
+import Signup from './pages/Signup';
 function App() {
  
 
@@ -22,6 +23,7 @@ function App() {
         { path: '/contact', element: <div>Contact</div> },
         { path: '/details/:id', element:<RouteProtector><Details/></RouteProtector>  },
         { path: '/login', element: <RouteProtector isloginPage={true}><Login/></RouteProtector> },
+         { path: '/signup', element: <RouteProtector isloginPage={true}><Signup/></RouteProtector> },
       ],
     },{
        path: '/admin',

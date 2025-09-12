@@ -24,9 +24,8 @@ const {user} = userAuth
                          <NavLink to="/contact" className={({isActive})=>{ return isActive?'underline':''}}>Contact</NavLink>
                     </li>
                 { !user?(
-                    <li className=" hover:underline">
-                        <NavLink to="/login" className={({isActive})=>{ return isActive?'underline':''}}>Login</NavLink> 
-                    </li>):
+                    <><li className=" hover:underline"> <NavLink to="/login" className={({isActive})=>{ return isActive?'underline':''}}>Login</NavLink>  </li> <li className=" hover:underline">   <NavLink to="/signup" className={({isActive})=>{ return isActive?'underline':''}}>SignUp</NavLink>  </li></>
+                ):
 
                    (
                     <li>

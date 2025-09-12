@@ -69,9 +69,16 @@ export default function MobileMenu() {
             </NavLink>
           </li>
            { !user?(
+            <>
                     <li className=" hover:underline">
                         <NavLink to="/login" className={({isActive})=>{ return isActive?'underline':''}}>Login</NavLink> 
-                    </li>):
+                    </li>
+                    
+                    <li className=" hover:underline">
+                        <NavLink to="/signup" className={({isActive})=>{ return isActive?'underline':''}}>Signup</NavLink> 
+                    </li>
+                 </> 
+                  ):
 
                    (
                     <li onClick={logoutHandler}>
