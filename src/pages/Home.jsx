@@ -2,13 +2,14 @@ import { FaEdit, FaTrash } from 'react-icons/fa'; // for icons
 import NoteTable from '../components/NoteTable';
 import AddNote from '../components/AddNote';
 import SearchField from '../components/SearchField';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Model from '../components/Model';
 import InputFormGroup from "../components/formsComponent/InputFormGroup";
 import FormButton from "../components/formsComponent/formButton";
 import { useForm } from 'react-hook-form';
-
-
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { NotificationContext } from '../context/NotificationContext';
  
 const datas = [
   	{
@@ -53,12 +54,21 @@ const Home = ()=>{
 
 
 ];    
+     const useAuth = useContext(AuthContext);
+     const {authToken} = useAuth;
+     const useNotification = useContext(NotificationContext);
+     const notification = useNotification;
      const [filteredData, setFilteredData]   = useState(datas);
      const [searchTerm, setSearchTerm]   = useState('')
      const [isModelOpen, setIsModelOpen]  = useState(false);
      const [isEditForm, setIsEditForm]   = useState(false);
 
-  function filterData(event){
+ 
+
+
+  const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
+
+   function filterData(event){
         setSearchTerm(event.target.value)
         const filterData =datas.filter((data)=>{
                 return data.title.toLowerCase().includes(event.target.value.toLowerCase())
@@ -67,7 +77,6 @@ const Home = ()=>{
   }
 
 
-  const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
 
   function editFunction(row){
     console.log(row);
@@ -76,9 +85,26 @@ const Home = ()=>{
     reset({ title: "", note: "" });
 
   }
-  function onSubmit(data){
-      console.log(errors)
-      console.log(data)
+  async function onSubmit(data){
+       if(isEditForm){
+        return;
+       }
+      try{
+      const response =  await axios.post("http://localhost:3000/api/notebooks",{title:data.title, note:data.note},{headers:{
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${authToken}`,
+       }})
+
+       if(response.status==201 && response.data.message=="note saved"){
+        notification(response.data.message);
+        reset();
+        setIsModelOpen(false);
+        return;
+       }
+       
+      }catch(e){
+         notification("something went wrong");
+      }
   }
     return(
          <>

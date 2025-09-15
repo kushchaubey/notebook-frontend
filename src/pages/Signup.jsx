@@ -21,11 +21,6 @@ const {register, formState: { errors }, handleSubmit, reset, trigger} = useForm(
     const registerUser =  await axios.post("http://localhost:3000/api/notebooks/user/signup", {userName:data.userName, password:data.password},{
         headers: { "Content-Type": "application/json" }
       })
-
-       if(registerUser.status!==201){
-        console.log(registerUser.data.message);
-        return false
-       }
        if(registerUser.status==201 && registerUser.data.message == "User created"){
           
           const isLogedIn =  await login(data.userName, data.password);
