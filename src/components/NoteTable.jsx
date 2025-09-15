@@ -5,8 +5,8 @@ const NoteTable = ({filteredData,cols, paginationValid})=>{
  const navigate = useNavigate();
 
     function rowClicked(row){
-      console.log(row.id);
-      navigate(`/details/${row.id}`);
+      console.log(row._id);
+      navigate(`/details/${row._id}`);
     }
 
 

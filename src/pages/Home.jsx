@@ -2,7 +2,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'; // for icons
 import NoteTable from '../components/NoteTable';
 import AddNote from '../components/AddNote';
 import SearchField from '../components/SearchField';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Model from '../components/Model';
 import InputFormGroup from "../components/formsComponent/InputFormGroup";
 import FormButton from "../components/formsComponent/formButton";
@@ -13,13 +13,13 @@ import { NotificationContext } from '../context/NotificationContext';
  
 const datas = [
   	{
-		id: 1,
+		_id: 1,
 		title: 'Beetlejuice',
         date:'dddd',
 		
 	},
 	{
-		id: 2,
+		_id: 2,
         date:'dddd',
 		title: 'Ghostbusters',
 		
@@ -58,7 +58,8 @@ const Home = ()=>{
      const {authToken} = useAuth;
      const useNotification = useContext(NotificationContext);
      const notification = useNotification;
-     const [filteredData, setFilteredData]   = useState(datas);
+     const [notes, setNotes] = useState([]);
+     const [filteredData, setFilteredData] = useState([])
      const [searchTerm, setSearchTerm]   = useState('')
      const [isModelOpen, setIsModelOpen]  = useState(false);
      const [isEditForm, setIsEditForm]   = useState(false);
@@ -68,10 +69,47 @@ const Home = ()=>{
 
   const {register,   formState: { errors }, handleSubmit,reset}=  useForm();
 
+  useEffect(()=>{
+    
+  if (authToken) getNotes(); 
+
+  },[authToken]);
+
+  async function getNotes() {
+    
+    try{
+  
+      const allNotes = await axios.get("http://localhost:3000/api/notebooks",{headers:{
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${authToken}`,
+       }});
+     
+       if(allNotes.status==200){      
+       
+        const filteredDateData = allNotes.data.data.map(note=>{
+            const d = new Date(note.date);
+            return {
+                ...note,
+                date: new Intl.DateTimeFormat('en-GB').format(d) // "15/09/2025"
+            }
+
+        })  
+          setNotes(filteredDateData);
+          setFilteredData(filteredDateData);
+          return;
+       }
+   
+    }catch(e){
+        console.log(e)
+        notification("something went wrong");
+    }
+    
+  }
+
    function filterData(event){
         setSearchTerm(event.target.value)
-        const filterData =datas.filter((data)=>{
-                return data.title.toLowerCase().includes(event.target.value.toLowerCase())
+        const filterData =notes.filter((note)=>{
+                return note.title.toLowerCase().includes(event.target.value.toLowerCase())
             })
         setFilteredData(filterData)
   }
@@ -99,6 +137,7 @@ const Home = ()=>{
         notification(response.data.message);
         reset();
         setIsModelOpen(false);
+       await getNotes();
         return;
        }
        
