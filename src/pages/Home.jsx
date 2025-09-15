@@ -64,7 +64,7 @@ const Home = ()=>{
   },[authToken]);
 
   async function getNotes() {
-    
+    console.log(authToken);
     try{
   
       const allNotes = await axios.get("http://localhost:3000/api/notebooks",{headers:{
@@ -115,14 +115,31 @@ const Home = ()=>{
     console.log(row);
     setIsEditForm(true);
     setIsModelOpen(true);
-    reset({ title: "", note: "" });
+    reset({ title: row.title, note: row.note,id:row._id });
 
   }
   async function onSubmit(data){
+    console.log(data);
        if(isEditForm){
+       try{  
+    
+        const response =  await axios.put(`http://localhost:3000/api/notebooks/update/${data.id}`,{title:data.title, note:data.note},{headers:{
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${authToken}`,
+       }})
+        if(response.status==200 && response.data.message=="notebook updated"){
+        notification(response.data.message);
+        reset();
+        setIsModelOpen(false);
+       await getNotes();
+        }
+      }catch(e){
+           notification("Something went wrong!");
+        }
         return;
        }
       try{
+        
       const response =  await axios.post("http://localhost:3000/api/notebooks",{title:data.title, note:data.note},{headers:{
         "Content-Type": "application/json",
          "Authorization": `Bearer ${authToken}`,
@@ -168,6 +185,7 @@ const Home = ()=>{
                       {errors.note && (<p className="text-red-400">{errors.note?.message}</p>)}
 
                      </InputFormGroup>
+
                      <FormButton buttonname={isEditForm?"Update Note":"Add Note"} type="submit"/>
                    </form>
 
