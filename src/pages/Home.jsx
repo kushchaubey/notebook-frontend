@@ -64,7 +64,6 @@ const Home = ()=>{
   },[authToken]);
 
   async function getNotes() {
-    console.log(authToken);
     try{
   
       const allNotes = await axios.get("http://localhost:3000/api/notebooks",{headers:{
