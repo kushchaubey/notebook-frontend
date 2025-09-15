@@ -10,21 +10,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { NotificationContext } from '../context/NotificationContext';
- 
-const datas = [
-  	{
-		_id: 1,
-		title: 'Beetlejuice',
-        date:'dddd',
-		
-	},
-	{
-		_id: 2,
-        date:'dddd',
-		title: 'Ghostbusters',
-		
-	},
-];
+import { useNavigate } from 'react-router';
+
 
 
 const Home = ()=>{
@@ -55,7 +42,7 @@ const Home = ()=>{
 
 ];    
      const useAuth = useContext(AuthContext);
-     const {authToken} = useAuth;
+     const {authToken,logout} = useAuth;
      const useNotification = useContext(NotificationContext);
      const notification = useNotification;
      const [notes, setNotes] = useState([]);
@@ -63,6 +50,7 @@ const Home = ()=>{
      const [searchTerm, setSearchTerm]   = useState('')
      const [isModelOpen, setIsModelOpen]  = useState(false);
      const [isEditForm, setIsEditForm]   = useState(false);
+     const navigate = useNavigate();
 
  
 
@@ -101,6 +89,13 @@ const Home = ()=>{
    
     }catch(e){
         console.log(e)
+        if(e.response.data.message=="Invalid token"){
+            notification(e.response.data.message);
+             logout();
+             navigate('/login');
+                     
+            return
+        }
         notification("something went wrong");
     }
     
