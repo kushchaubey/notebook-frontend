@@ -34,7 +34,7 @@ const Home = ()=>{
 			
             <div className='flex gap-2.5'> 
                 <button onClick={()=>editFunction(row)} className=' bg-cyan-700 '><FaEdit/></button>
-                <button className=' bg-red-500 '><FaTrash/></button>
+                <button className=' bg-red-500 ' onClick={()=>deleteFunction(row)}><FaTrash/></button>
             </div> 
 		)
 }
@@ -49,6 +49,9 @@ const Home = ()=>{
      const [filteredData, setFilteredData] = useState([])
      const [searchTerm, setSearchTerm]   = useState('')
      const [isModelOpen, setIsModelOpen]  = useState(false);
+     const [isDeleteModelOpen, setDeleteModelOpen]  = useState(false);
+    const [deleteItem, setDeleteItem]  = useState({});
+
      const [isEditForm, setIsEditForm]   = useState(false);
      const navigate = useNavigate();
 
@@ -109,13 +112,37 @@ const Home = ()=>{
   }
 
 
-
+ 
   function editFunction(row){
     console.log(row);
     setIsEditForm(true);
     setIsModelOpen(true);
     reset({ title: row.title, note: row.note,id:row._id });
 
+  }
+
+  function deleteFunction(row){
+    console.log(row);
+    setDeleteModelOpen(true);
+    setDeleteItem(row);
+  }
+  async function handleDelete(){
+    console.log(deleteItem)
+        try{  
+    
+        const response =  await axios.delete(`http://localhost:3000/api/notebooks/delete/${deleteItem._id}`,{headers:{
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${authToken}`,
+       }})
+        if(response.status==200 && response.data.message=="notebook Deleted"){
+        notification(deleteItem.title+" "+response.data.message);
+        setDeleteItem({});
+        setDeleteModelOpen(false);
+       await getNotes();
+        }
+      }catch(e){
+           notification("Something went wrong!");
+        }
   }
   async function onSubmit(data){
     console.log(data);
@@ -188,8 +215,16 @@ const Home = ()=>{
                      <FormButton buttonname={isEditForm?"Update Note":"Add Note"} type="submit"/>
                    </form>
 
-            </Model >
- 
+                </Model >
+
+                   <Model heading={`You want to delete ${deleteItem.title} ?`} openModel={isDeleteModelOpen} closeModel={setDeleteModelOpen}> 
+                    
+                       <div className='flex flex-col gap-5 max-w-[50%] m-auto mt-8 justify-center sm:flex sm:flex-row'>
+                          <button type="button" className="px-6 py-3 bg-red-600" onClick={handleDelete}>Delete</button>
+                          <button  type="button" className="px-6 py-3" onClick={()=>setDeleteModelOpen(false)}>Cancel</button>
+                       </div>
+                  </Model >
+                      
          </div>
 
              
